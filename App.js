@@ -72,6 +72,13 @@ export default class App extends Component {
       </Mapbox.PointAnnotation>
     );
   }
+  onUserLocationUpdate = (location) => {
+    console.log(location,'asd')
+    this.setState({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    });
+  }
   render() {
     console.log(this.state, "state");
     const { latitude, longitude } = this.state;
@@ -80,10 +87,13 @@ export default class App extends Component {
         {longitude && latitude ? (
           <Mapbox.MapView
             styleURL={Mapbox.StyleURL.Street}
+            animated
             zoomLevel={15}
             showUserLocation
             style={styles.container}
             centerCoordinate={[longitude, latitude]}
+            onUserLocationUpdate={this.onUserLocationUpdate}
+            showUserLocation
             userTrackingMode={Mapbox.UserTrackingModes.FollowWithCourse}
             logoEnabled={false}
           />
